@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+}
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+.skin {
+  position: relative;
+}
+.nose {
+  border: 10px solid red;
+  border-color: red transparent transparent transparent;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  left: 50%;
+  top: 145px;
+  margin-left: -10px;
+}
+.yuan {
+  position: absolute;
+  width: 20px;
+  height: 6px;
+  top: -16px;
+  left: -10px;
+  border-radius: 14px 14px 0 0;
+  background: red;
+}
+.eye {
+  border: 2px solid black;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  left: 50%;
+  margin-left: -32px;
+  top: 100px;
+  background: #2e2d2e;
+  border-radius: 50%;
+}
+.eye::before {
+  content: '';
+  display: block;
+  border: 3px solid black;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50%;
+  position: relative;
+  left: 6px;
+  top: 2px;
+}
+.eye.left {
+  transform: translateX(-100px);
+}
+.eye.right {
+  transform: translateX(+100px);
+}
