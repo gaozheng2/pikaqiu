@@ -117,9 +117,93 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
+})({"css.js":[function(require,module,exports) {
+"use strict";
 
-},{}],"C:/Users/gaoz/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var string = "body {\n  position: relative;\n  background-color: #ffe600;\n  min-height: 100vh;\n}\n.nose {\n  border: 10px solid red;\n  border-color: black transparent transparent transparent;\n  width: 0px;\n  height: 0px;\n  position: absolute;\n  left: 50%;\n  top: 145px;\n  margin-left: -10px;\n}\n.nose:hover {\n  transform-origin: center bottom;\n  animation: wave 200ms infinite linear;\n}\n@keyframes wave {\n  0% {\n    transform: rotate(0deg);\n  }\n  33% {\n    transform: rotate(3deg);\n  }\n  66% {\n    transform: rotate(-3deg);\n  }\n  100% {\n    transform: rotate(0deg);\n  }\n}\n.yuan {\n  position: absolute;\n  width: 20px;\n  height: 6px;\n  top: -16px;\n  left: -10px;\n  border-radius: 14px 14px 0 0;\n  background: black;\n}\n.eye {\n  border: 2px solid black;\n  width: 64px;\n  height: 64px;\n  position: absolute;\n  left: 50%;\n  margin-left: -32px;\n  top: 100px;\n  background: #2e2d2e;\n  border-radius: 50%;\n}\n.eye::before {\n  content: '';\n  display: block;\n  border: 3px solid black;\n  width: 32px;\n  height: 32px;\n  background: #fff;\n  border-radius: 50%;\n  position: relative;\n  left: 4px;\n  top: 2px;\n}\n.eye.left {\n  transform: translateX(-100px);\n}\n.eye.right {\n  transform: translateX(+100px);\n}\n.mouth {\n  width: 200px;\n  height: 100px;\n  position: absolute;\n  left: 50%;\n  top: 170px;\n  margin-left: -100px;\n}\n.mouth .up .lip {\n  border: 3px solid black;\n  width: 100px;\n  height: 30px;\n  border-top: transparent;\n  position: absolute;\n  background-color: #ffe600;\n  z-index: 1;\n}\n.mouth .up .lip.left {\n  border-radius: 0 0 0 50px;\n  border-right: transparent;\n  transform: rotate(-20deg);\n}\n.mouth .up .lip.right {\n  border-radius: 0 0 50px 0;\n  border-left: transparent;\n  transform: rotate(20deg);\n  left: 100px;\n}\n.mouth .up::before {\n  content: '';\n  display: block;\n  background: #ffe600;\n  width: 200px;\n  height: 14px;\n  position: absolute;\n  left: 50%;\n  margin-left: -100px;\n  top: -5px;\n  z-index: 2;\n}\n.mouth .down {\n  width: 100%;\n  height: 180px;\n  position: absolute;\n  overflow: hidden;\n}\n.mouth .down .yuan1 {\n  border: 3px solid black;\n  width: 150px;\n  height: 1000px;\n  position: absolute;\n  left: 50%;\n  margin-left: -75px;\n  bottom: 0;\n  background: #9b000a;\n  border-radius: 75px/250px;\n  overflow: hidden;\n}\n.mouth .down .yuan1 .yuan2 {\n  width: 200px;\n  height: 300px;\n  position: absolute;\n  bottom: -160px;\n  left: 50%;\n  background: #ff485f;\n  margin-left: -100px;\n  border-radius: 100px;\n}\n.face {\n  position: absolute;\n  border: 3px solid black;\n  border-radius: 50%;\n  background: #ff0000;\n  width: 88px;\n  height: 88px;\n  left: 50%;\n  top: 220px;\n  margin-left: -44px;\n  z-index: 3;\n}\n.face.left {\n  transform: translateX(-180px);\n}\n.face.right {\n  transform: translateX(180px);\n}";
+var _default = string;
+exports.default = _default;
+},{}],"main.js":[function(require,module,exports) {
+"use strict";
+
+var _css = _interopRequireDefault(require("./css.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var player = {
+  n: 0,
+  time: 1,
+  intervalId: undefined,
+  isPause: false,
+  isEnd: false,
+  events: {
+    '#btnPause': 'pause',
+    '#btnFast': 'fast'
+  },
+  init: function init() {
+    player.bindEvents();
+    player.play();
+  },
+  bindEvents: function bindEvents() {
+    for (var key in player.events) {
+      // 如果 key 是 events 的自身属性，避免 propotype 污染
+      if (player.events.hasOwnProperty(key)) {
+        var value = player.events[key];
+        document.querySelector(key).onclick = player[value];
+      }
+    }
+  },
+  play: function play() {
+    player.reset();
+    if (player.isEnd) return;
+    player.intervalId = setInterval(function () {
+      // 为计时器设置一个ID
+      demo1.innerHTML = _css.default.substr(0, player.n);
+      demo2.innerText += _css.default[player.n];
+      demo2.scrollTop = demo2.scrollHeight;
+      player.n += 1;
+
+      if (player.n === _css.default.length) {
+        player.reset();
+        player.isEnd = true;
+      }
+    }, player.time);
+  },
+  reset: function reset() {
+    // 停止计时器
+    window.clearInterval(player.intervalId);
+  },
+  pause: function pause() {
+    if (player.isPause) {
+      btnPause.innerText = '暂停';
+      player.isPause = false;
+      player.play();
+    } else {
+      player.reset();
+      btnPause.innerText = '播放';
+      player.isPause = true;
+    }
+  },
+  fast: function fast() {
+    if (btnFast.innerText === '慢速') {
+      btnFast.innerText = '快速';
+      player.time = 10;
+    } else {
+      btnFast.innerText = '慢速';
+      player.time = 1;
+    }
+
+    if (!player.isPause) {
+      player.play();
+    }
+  }
+};
+player.init();
+},{"./css.js":"css.js"}],"C:/Users/gaoz/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -147,7 +231,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62307" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49448" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

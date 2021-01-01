@@ -1,13 +1,4 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-*::after,
-*::before {
-  box-sizing: border-box;
-}
-.skin {
+const string = `body {
   position: relative;
   background-color: #ffe600;
   min-height: 100vh;
@@ -163,7 +154,6 @@
 }
 .face.right {
   transform: translateX(180px);
-}
+}`
 
-
-/*# sourceMappingURL=/style.e308ff8e.css.map */
+export default string
